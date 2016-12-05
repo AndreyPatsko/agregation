@@ -1,10 +1,12 @@
 db.grades.aggregate([
    {$unwind:"$scores"},
-   {$match:{"scores.type":"exam","scores.type":"homework"}}
-//    {$group:{
-//        _id:{student_id:"$student_id",class_id:"$class_id"},
-// //         average:{$avg:"$scores.score"}
+   {$match:{"scores.type":{$in:["exam","homework"]}}},
+//    {$project:{"scores.type":1,_id:0}},
+   {$group:{
+       _id:{student_id:"$student_id",class_id:"$class_id"},
+        average:{$avg:"$scores.score"}
 //        aver:{$sum:"$scores.score"}
-//         }},
+        }},
 //     {$match:{"_id.student_id":48}}
 ])
+   
